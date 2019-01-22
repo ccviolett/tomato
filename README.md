@@ -1,2 +1,2 @@
 # tomato
-A "Tomato Time Limit" software power by lua
+A "Tomato Time Limit" software code by bash
