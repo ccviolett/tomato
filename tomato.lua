@@ -24,7 +24,7 @@ end
 -- Turn float to int
 to_int = function(num)
 	if string.find(num, "%.") == nil then return num; end
-	return string.sub(num, string.find(num, "%.") - 1); 
+	return string.sub(num, 1, string.find(num, "%.") - 1); 
 end
 
 -- Check if the path is exist
@@ -118,6 +118,18 @@ init = function()
 	if check_path(tmp_path) == false then run("mkdir -p " .. tmp_path);end
 end
 
+-- Count the rest of time
+count_time = function(need_time)
+	local cnt = 1;
+	while cnt <= 100 do
+		os.execute("sleep " .. need_time / 100);
+		local left = math.ceil(need_time - cnt * (need_time / 100));
+		print("# Back in " .. to_int(left / 60) .. " m " .. to_int(left % 60) .. " s");
+		print(cnt);
+		cnt = cnt + 1;
+	end
+end
+
 main = function()
 	init();
 	local choose;
@@ -159,6 +171,12 @@ main = function()
 	end);
 end
 
+if arg[1] == "--count-time" then
+	count_time(arg[2] * 60)
+	os.exit(0);
+end
+
 while true do
 	main();
 end
+
